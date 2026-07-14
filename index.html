@@ -1,74 +1,79 @@
-<!doctype html>
-<html lang="zh-Hant-TW">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#9f1717">
-  <meta name="description" content="家的味道年菜預購專區">
-  <title>家的味道｜年菜訂購</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b91c1c">
+<title>家的味道｜鴻運年菜訂購</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+*{box-sizing:border-box} body{font-family:'Noto Sans TC',sans-serif;background:#fef3c7;color:#292524}
+.text-red{color:#991b1b}.bg-red{background:#b91c1c}.gold{color:#fde68a}.border-gold{border-color:#f59e0b}
+.hero{background:linear-gradient(135deg,#991b1b,#dc2626 55%,#991b1b)}
+.logo{width:104px;height:104px;object-fit:contain;background:white;border-radius:999px;padding:4px;box-shadow:0 8px 20px #450a0a66}
+.card{min-height:220px}.dish-checkbox{appearance:none;border:3px solid #991b1b;border-radius:.45rem;width:1.75rem;height:1.75rem;position:relative;flex:none;cursor:pointer}
+.dish-checkbox:checked{background:#991b1b}.dish-checkbox:checked:after{content:'✓';color:#fff;font-weight:900;position:absolute;inset:0;display:grid;place-items:center}
+.qty{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;font-size:1.2rem;font-weight:900;box-shadow:0 2px 5px #0002}.qty:active{transform:scale(.93)}
+.dish-img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;transition:transform .25s}.dish-img:hover{transform:scale(1.035)}
+.lightbox{display:none;position:fixed;inset:0;z-index:100;background:#000e;padding:18px;align-items:center;justify-content:center}.lightbox.open{display:flex}.lightbox img{max-width:96vw;max-height:88vh;object-fit:contain;border-radius:14px;background:white}.close{position:absolute;right:18px;top:12px;color:white;font-size:42px;line-height:1;cursor:pointer}.hint{position:absolute;bottom:14px;color:white;background:#0008;padding:7px 14px;border-radius:999px}
+input:invalid:not(:placeholder-shown){border-color:#dc2626;background:#fef2f2}
+@media(max-width:640px){.logo{width:82px;height:82px}.card{min-height:205px}}
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero__inner">
-      <img class="logo" src="images/08.jpg" alt="家的味道">
-      <div>
-        <p class="eyebrow" id="hero-kicker"></p>
-        <h1 id="site-title"></h1>
-        <p class="hero__sub" id="site-subtitle"></p>
-      </div>
+<header class="hero text-white py-7 px-4 border-b-4 border-yellow-500 shadow-xl">
+  <div class="max-w-4xl mx-auto flex items-center gap-4 sm:gap-6">
+    <img src="images/mascot.jpg" class="logo" alt="家的味道人偶" width="104" height="104">
+    <div>
+      <p class="text-yellow-200 font-black tracking-widest text-lg sm:text-2xl">家傳的年味・團圓上桌</p>
+      <h1 class="font-black text-3xl sm:text-5xl leading-tight">家的味道 鴻運年菜</h1>
+      <p class="font-bold text-lg sm:text-2xl mt-1">115 年外帶單點及套餐｜示範資料</p>
     </div>
-  </header>
-
-  <main class="wrap">
-    <section class="notice" aria-label="訂購資訊">
-      <div><span>📅 訂購期限</span><strong id="order-deadline"></strong></div>
-      <div><span>🛍️ 取餐方式</span><strong id="pickup-method"></strong></div>
-      <div><span>💰 訂金說明</span><strong id="deposit-note"></strong></div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <div><p>精選年菜</p><h2>選擇您想訂購的品項</h2></div>
-        <span id="item-count"></span>
-      </div>
-      <div id="menu-list" class="menu-grid"></div>
-    </section>
-
-    <section class="card form-card">
-      <h2>訂購人資料</h2>
-      <p class="muted">請填寫完整，方便店家與您確認訂單。</p>
-      <div class="form-grid">
-        <label>姓名（請輸入全名）<input id="customer-name" autocomplete="name" inputmode="text" maxlength="10" placeholder="請輸入中文全名"></label>
-        <label>電話（至少 7 碼）<input id="customer-phone" type="tel" autocomplete="tel" inputmode="numeric" minlength="7" maxlength="15" placeholder="請輸入至少 7 碼電話"></label>
-        <label class="full">取餐日期與時間<input id="pickup-time" placeholder="例如：1/28（除夕）16:00"></label>
-        <label class="full">付款方式<select id="payment-method"><option>匯款（店家提供帳戶資訊）</option></select></label>
-      </div>
-      <div class="reminder">
-        <strong>重要提醒</strong>
-        <p id="important-note"></p>
-      </div>
-    </section>
-
-    <section class="checkout" aria-label="訂單總計">
-      <div><span>已選總金額</span><strong id="total-price">NT$ 0</strong></div>
-      <button id="send-order-btn" type="button">傳送至 LINE 與店家確認</button>
-    </section>
-
-    <section class="card contact-card">
-      <h2>訂購與取餐資訊</h2>
-      <div class="contact-list">
-        <p><span>訂購專線</span><strong id="phone-list"></strong></p>
-        <p><span>取餐地址</span><strong id="store-address"></strong></p>
-      </div>
-      <div class="contact-actions">
-        <a id="map-button" class="btn secondary" href="#" target="_blank" rel="noopener">Google 地圖導航</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>家的味道｜年菜訂購專頁</footer>
-  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
-  <script src="app.js"></script>
-</body>
-</html>
+  </div>
+</header>
+<main class="max-w-4xl mx-auto p-4 space-y-6">
+<section class="grid sm:grid-cols-3 gap-3">
+ <div class="bg-white rounded-xl p-4 shadow"><b class="text-red">📅 訂購期限</b><p class="font-bold mt-1">即日起至 115/02/02 止</p></div>
+ <div class="bg-white rounded-xl p-4 shadow"><b class="text-red">🏪 取餐方式</b><p class="font-bold mt-1">到店自取；外送請先洽詢</p></div>
+ <div class="bg-white rounded-xl p-4 shadow"><b class="text-red">💰 訂金說明</b><p class="font-bold mt-1">預付 5 成訂金或全額付清</p></div>
+</section>
+<section><p class="text-red font-black">精選年菜</p><div class="flex justify-between items-end"><h2 class="text-2xl font-black">選擇您想訂購的品項</h2><span class="text-gray-600">共 15 項</span></div><p class="text-sm text-gray-600 mt-1">提示：點擊菜色照片，可放大至全螢幕查看。</p></section>
+<div id="menu-list" class="grid gap-5 sm:grid-cols-2"></div>
+<section class="p-5 bg-white rounded-xl shadow-lg border-2 border-red-700">
+<h2 class="text-xl font-black text-red mb-4 border-b pb-2">訂購人資料</h2>
+<div class="grid sm:grid-cols-2 gap-4">
+ <div><label class="font-bold block mb-1">姓名（請輸入中文全名）</label><input id="customer-name" maxlength="10" autocomplete="name" class="w-full p-3 border-2 rounded-lg outline-none focus:border-yellow-500" placeholder="例如：王小明"></div>
+ <div><label class="font-bold block mb-1">電話（至少 7 碼）</label><input id="customer-phone" type="tel" inputmode="tel" autocomplete="tel" class="w-full p-3 border-2 rounded-lg outline-none focus:border-yellow-500" placeholder="例如：073755027 或 0912345678"></div>
+</div>
+<div class="mt-4"><label class="font-bold block mb-1">取餐日期與時間</label><input id="pickup-time" class="w-full p-3 border-2 rounded-lg outline-none focus:border-yellow-500" placeholder="例如：1/28（除夕）16:00"></div>
+<div class="mt-4"><label class="font-bold block mb-1">付款方式</label><select id="payment-method" class="w-full p-3 border-2 rounded-lg"><option>匯款（店家將提供帳戶資訊）</option></select></div>
+<div class="mt-4 p-3 bg-red-50 border-l-4 border-red-600 rounded"><b class="text-red">重要提醒</b><p class="text-sm mt-1">本頁送出的內容為訂購意願；完成付款並收到店家回條後，才算正式完成訂購。</p></div>
+</section>
+<section class="sticky bottom-2 bg-red text-white p-4 rounded-xl shadow-2xl border-2 border-yellow-500 flex flex-col sm:flex-row gap-3 justify-between items-center">
+<div><span class="text-sm">已選總金額</span><div id="total-price" class="text-3xl font-black text-yellow-300">NT$ 0</div></div>
+<button id="send-order-btn" class="w-full sm:w-auto px-6 py-3 bg-green-600 rounded-xl text-xl font-black shadow hover:bg-green-700"><i class="fab fa-line mr-2"></i>傳送至 LINE 與店家確認</button>
+</section>
+<footer class="bg-white p-5 rounded-xl shadow-lg border-t-4 border-red-700">
+<h2 class="text-xl font-black text-red border-b pb-2 mb-3">訂購與取餐資訊</h2>
+<p><b>訂購專線：</b>0910278677（阿桃）／0960805321（阿賢）</p>
+<p class="mt-2"><b>取餐地址：</b>高雄市仁武區鳳仁路21之31號</p>
+<a href="https://www.google.com/maps/dir/?api=1&destination=22.6795571%2C120.3562292&destination_place_id=ChIJvdyx-ssebjQRk7xW7rH0mG0" target="_blank" rel="noopener" class="inline-flex mt-3 items-center px-4 py-2 bg-yellow-500 text-white font-black rounded-lg shadow hover:bg-yellow-600"><i class="fas fa-location-dot mr-2"></i>Google 地圖導航</a>
+<div class="mt-6 pt-5 border-t text-center"><p class="font-black text-red text-lg">加入 LINE／掃碼聯絡店家</p><img src="images/line-qr.jpg" loading="lazy" class="mx-auto mt-3 w-52 h-52 object-contain border rounded-xl p-2" alt="家的味道 LINE QR Code" width="208" height="208"></div>
+</footer>
+</main>
+<div id="lightbox" class="lightbox" aria-hidden="true"><button class="close" aria-label="關閉">×</button><img id="lightbox-img" alt="放大菜色照片"><div class="hint">點空白處或按 Esc 關閉</div></div>
+<script>
+const menuItems=[
+{name:'鴻運團圓整套年菜',price:6600,type:'套餐',image:'011.jpg',details:'鴻運四喜大拼盤\n山珍錦繡魚翅羹\n長紅蒜蓉粉絲蝦\n富貴筍香大蹄膀\n蒲燒鯛魚鑲米糕\n清蒸甘露龍虎斑\n花鑲洋芋焗百菇\n魚翅首烏全雞湯\n蘋果芋丸甜在心\n萬兩金磚蜜蛋糕'},
+{name:'小資族精選套餐',price:3680,type:'套餐',image:'022.jpg',details:'精美四拼盤\n蟹肉蝦仁羹\n蒲燒鯛米糕\n糖醋鮮鱸魚\n橙排花枝餅'},
+{name:'鮑翅佛跳牆（含盅）',price:1200,image:'21.jpg'},{name:'清蒸龍虎斑',price:750,image:'12.jpg'},{name:'秘製豬肋排',price:650,image:'16.jpg'},{name:'筍香大蹄膀',price:600,image:'15.jpg'},{name:'蒲燒鯛米糕',price:650,image:'023.jpg'},{name:'錦繡魚翅羹',price:600,image:'11.jpg'},{name:'古法八寶丸',price:450,image:'22.jpg'},{name:'陳香紹醉雞',price:550,image:'18.jpg'},{name:'魚翅燉全雞',price:1150,image:'19.jpg'},{name:'橙汁蜜排骨',price:480,image:'14.jpg'},{name:'手工芋頭丸',price:380,image:'20.jpg'},{name:'糖醋鮮鱸魚',price:650,image:'13.jpg'},{name:'泰式花枝餅',price:400,image:'17.jpg'}];
+const list=document.querySelector('#menu-list'), totalEl=document.querySelector('#total-price');
+menuItems.forEach((x,i)=>{let pkg=x.type==='套餐',d=document.createElement('article');d.className=`card flex overflow-hidden rounded-2xl shadow-xl ${pkg?'bg-amber-500 border-4 border-red-700':'bg-white border-l-8 border-red-700'}`;d.innerHTML=`<div class="w-7/12 p-4 flex flex-col justify-between"><div><div class="flex gap-3 items-start"><input class="dish-checkbox mt-1" type="checkbox" id="c${i}"><label for="c${i}" class="font-black cursor-pointer ${pkg?'text-white text-xl':'text-red text-lg'}">${x.name}</label></div>${pkg?`<p class="whitespace-pre-line leading-6 mt-2 bg-white/90 rounded-lg p-3 text-sm font-bold text-red-900">${x.details}</p>`:''}</div><div><p class="font-black ${pkg?'text-white':'text-red'} text-xl">NT$ ${x.price.toLocaleString()}</p><div class="flex items-center gap-3 mt-2"><button class="qty ${pkg?'bg-white text-orange-700':'bg-gray-200'}" onclick="qty(${i},-1)">−</button><span class="text-2xl font-black ${pkg?'text-white':''}" id="q${i}">1</span><button class="qty ${pkg?'bg-white text-orange-700':'bg-gray-200'}" onclick="qty(${i},1)">＋</button></div><small class="${pkg?'text-white':'text-gray-500'}">小計：NT$ <span id="s${i}">${x.price.toLocaleString()}</span></small></div></div><div class="w-5/12 bg-gray-100 overflow-hidden"><img src="images/${x.image}" loading="lazy" decoding="async" class="dish-img" alt="${x.name}" data-full="images/${x.image}"></div>`;list.appendChild(d)});
+window.qty=(i,n)=>{let q=document.querySelector('#q'+i),v=Math.max(1,+q.textContent+n);q.textContent=v;document.querySelector('#s'+i).textContent=(v*menuItems[i].price).toLocaleString();if(n>0)document.querySelector('#c'+i).checked=true;calc()};
+function calc(){let t=0;menuItems.forEach((x,i)=>{if(document.querySelector('#c'+i).checked)t+=x.price*(+document.querySelector('#q'+i).textContent)});totalEl.textContent='NT$ '+t.toLocaleString();return t}list.addEventListener('change',calc);
+const lb=document.querySelector('#lightbox'),lbi=document.querySelector('#lightbox-img');document.addEventListener('click',e=>{if(e.target.classList.contains('dish-img')){lbi.src=e.target.dataset.full;lbi.alt=e.target.alt;lb.classList.add('open');lb.setAttribute('aria-hidden','false')}else if(e.target===lb||e.target.classList.contains('close'))closeLb()});function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');lbi.src=''}document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+function alertBox(m){let d=document.createElement('div');d.className='fixed inset-0 bg-black/70 z-[200] grid place-items-center p-4';d.innerHTML=`<div class="bg-white rounded-2xl p-7 max-w-sm text-center shadow-2xl"><p class="text-xl font-bold mb-5">${m}</p><button class="bg-red text-white px-8 py-3 rounded-xl font-black" onclick="this.closest('.fixed').remove()">確定</button></div>`;document.body.appendChild(d)}
+document.querySelector('#send-order-btn').onclick=()=>{let name=document.querySelector('#customer-name').value.trim(),phone=document.querySelector('#customer-phone').value.trim(),time=document.querySelector('#pickup-time').value.trim();if(!/^[\u3400-\u9FFF]{2,10}$/.test(name))return alertBox('姓名請輸入 2～10 個中文字的全名。');let digits=phone.replace(/\D/g,'');if(digits.length<7)return alertBox('電話號碼至少需要 7 碼。');if(!time)return alertBox('請填寫取餐日期與時間。');let items='';menuItems.forEach((x,i)=>{if(document.querySelector('#c'+i).checked){let q=+document.querySelector('#q'+i).textContent;items+=`✅ ${x.name} × ${q}（NT$ ${(x.price*q).toLocaleString()}）\n`}});if(!items)return alertBox('尚未選擇任何菜色。');let msg=`【家的味道－年菜訂單】\n👤 姓名：${name}\n📞 電話：${phone}\n📅 取餐：${time}\n💳 付款：匯款\n\n--- 訂購清單 ---\n${items}\n💰 總計：NT$ ${calc().toLocaleString()}\n\n此訂單為訂購意願，完成付款並收到店家回條後才算訂購成功。`;location.href='https://line.me/R/msg/text/?'+encodeURIComponent(msg)};
+</script></body></html>
