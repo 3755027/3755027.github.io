@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#9f1717">
+  <meta name="description" content="家的味道年菜預購專區">
+  <title>家的味道｜年菜訂購</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <img class="logo" src="images/logo.jpg" alt="家的味道">
+      <div>
+        <p class="eyebrow" id="hero-kicker"></p>
+        <h1 id="site-title"></h1>
+        <p class="hero__sub" id="site-subtitle"></p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="notice" aria-label="訂購資訊">
+      <div><span>📅 訂購期限</span><strong id="order-deadline"></strong></div>
+      <div><span>🛍️ 取餐方式</span><strong id="pickup-method"></strong></div>
+      <div><span>💰 訂金說明</span><strong id="deposit-note"></strong></div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <div><p>精選年菜</p><h2>選擇您想訂購的品項</h2></div>
+        <span id="item-count"></span>
+      </div>
+      <div id="menu-list" class="menu-grid"></div>
+    </section>
+
+    <section class="card form-card">
+      <h2>訂購人資料</h2>
+      <p class="muted">請填寫完整，方便店家與您確認訂單。</p>
+      <div class="form-grid">
+        <label>姓名<input id="customer-name" autocomplete="name" placeholder="請輸入姓名"></label>
+        <label>電話<input id="customer-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="請輸入聯絡電話"></label>
+        <label class="full">取餐日期與時間<input id="pickup-time" placeholder="例如：1/28（除夕）16:00"></label>
+        <label class="full">付款方式<select id="payment-method"><option>匯款（店家提供帳戶資訊）</option></select></label>
+      </div>
+      <div class="reminder">
+        <strong>重要提醒</strong>
+        <p id="important-note"></p>
+      </div>
+    </section>
+
+    <section class="checkout" aria-label="訂單總計">
+      <div><span>已選總金額</span><strong id="total-price">NT$ 0</strong></div>
+      <button id="send-order-btn" type="button">傳送至 LINE 與店家確認</button>
+    </section>
+
+    <section class="card contact-card">
+      <h2>訂購與取餐資訊</h2>
+      <div class="contact-list">
+        <p><span>訂購專線</span><strong id="phone-list"></strong></p>
+        <p><span>取餐地址</span><strong id="store-address"></strong></p>
+      </div>
+      <div class="contact-actions">
+        <a id="call-button" class="btn secondary" href="#">一鍵撥打</a>
+        <a id="map-button" class="btn secondary" href="#" target="_blank" rel="noopener">Google 地圖導航</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>家的味道｜年菜訂購專頁</footer>
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+  <script src="app.js"></script>
+</body>
+</html>
