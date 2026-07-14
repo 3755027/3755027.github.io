@@ -13,7 +13,7 @@ const SITE = {
   phones: ["0910278677（阿桃）", "0960805321（阿賢）"],
   mainPhone: "0910278677",
   address: "高雄市仁武區鳳仁路21之31號",
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("高雄市仁武區鳳仁路21之31號")
+  mapUrl: "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("高雄市仁武區鳳仁路21之31號")
 };
 
 const MENU = [
@@ -48,7 +48,6 @@ function fillSiteInfo(){
   $("important-note").textContent = SITE.importantNote;
   $("phone-list").textContent = SITE.phones.join("／");
   $("store-address").textContent = SITE.address;
-  $("call-button").href = `tel:${SITE.mainPhone}`;
   $("map-button").href = SITE.mapUrl;
   $("item-count").textContent = `共 ${MENU.length} 項`;
   document.title = `${SITE.title}｜${SITE.year} 年年菜訂購`;
@@ -88,10 +87,31 @@ function showMessage(text){$("toast").innerHTML=`<div class="toast__box"><strong
 function sendOrder(){
   const name=$("customer-name").value.trim(), phone=$("customer-phone").value.trim(), pickup=$("pickup-time").value.trim();
   if(!name||!phone||!pickup){showMessage("請填寫姓名、電話與取餐日期時間。");return}
+  const chineseNamePattern = /^[\u3400-\u4DBF\u4E00-\u9FFF·．]{2,10}$/;
+  if(!chineseNamePattern.test(name)){
+    showMessage("姓名請輸入 2～10 個中文字的完整姓名，不要輸入英文、數字或空格。");
+    $("customer-name").focus();
+    return;
+  }
+  const phoneDigits = phone.replace(/\D/g, "");
+  if(phoneDigits.length < 7){
+    showMessage("電話號碼請至少輸入 7 碼數字。");
+    $("customer-phone").focus();
+    return;
+  }
   const chosen=MENU.map((item,i)=>state[i].checked?`✅ ${item.name} × ${state[i].qty}（${money(item.price*state[i].qty)}）`:null).filter(Boolean);
   if(!chosen.length){showMessage("請先選擇至少一項年菜。");return}
   const message=`【家的味道 ${SITE.year} 年年菜訂單】\n👤 姓名：${name}\n📞 電話：${phone}\n📅 取餐：${pickup}\n💳 付款：${$("payment-method").value}\n\n--- 訂購清單 ---\n${chosen.join("\n")}\n\n💰 總計：${money(getTotal())}\n\n⚠️ ${SITE.importantNote}\n\n謝謝您，請店家協助確認訂單與付款資訊。`;
   location.href=`https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
 }
 
-fillSiteInfo(); renderMenu(); updateTotal(); $("send-order-btn").addEventListener("click",sendOrder);
+fillSiteInfo();
+renderMenu();
+updateTotal();
+$("customer-name").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/[^\u3400-\u4DBF\u4E00-\u9FFF·．]/g, "");
+});
+$("customer-phone").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/[^0-9-]/g, "");
+});
+$("send-order-btn").addEventListener("click",sendOrder);

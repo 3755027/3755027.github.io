@@ -11,7 +11,7 @@
 <body>
   <header class="hero">
     <div class="hero__inner">
-      <img class="logo" src="images/logo.jpg" alt="家的味道">
+      <img class="logo" src="images/08.jpg" alt="家的味道">
       <div>
         <p class="eyebrow" id="hero-kicker"></p>
         <h1 id="site-title"></h1>
@@ -39,8 +39,8 @@
       <h2>訂購人資料</h2>
       <p class="muted">請填寫完整，方便店家與您確認訂單。</p>
       <div class="form-grid">
-        <label>姓名<input id="customer-name" autocomplete="name" placeholder="請輸入姓名"></label>
-        <label>電話<input id="customer-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="請輸入聯絡電話"></label>
+        <label>姓名（請輸入全名）<input id="customer-name" autocomplete="name" inputmode="text" maxlength="10" placeholder="請輸入中文全名"></label>
+        <label>電話（至少 7 碼）<input id="customer-phone" type="tel" autocomplete="tel" inputmode="numeric" minlength="7" maxlength="15" placeholder="請輸入至少 7 碼電話"></label>
         <label class="full">取餐日期與時間<input id="pickup-time" placeholder="例如：1/28（除夕）16:00"></label>
         <label class="full">付款方式<select id="payment-method"><option>匯款（店家提供帳戶資訊）</option></select></label>
       </div>
@@ -62,7 +62,6 @@
         <p><span>取餐地址</span><strong id="store-address"></strong></p>
       </div>
       <div class="contact-actions">
-        <a id="call-button" class="btn secondary" href="#">一鍵撥打</a>
         <a id="map-button" class="btn secondary" href="#" target="_blank" rel="noopener">Google 地圖導航</a>
       </div>
     </section>
